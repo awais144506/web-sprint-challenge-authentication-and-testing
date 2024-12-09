@@ -16,7 +16,7 @@ router.post('/register', checkValidNewUser, checkAvailable, async (req, res) => 
   }
 });
 
-router.post('/login', (req, res) => {
+router.post('/login',checkValidNewUser,(req, res) => {
   let { username, password } = req.body
 
   User.checkUserName({ username })
@@ -25,11 +25,11 @@ router.post('/login', (req, res) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         res.status(200).json({ message: `welcome, ${user.username}`,token})
       } else {
-        res.status(401).json({ message: 'Invalid Credentials' })
+        res.status(401).json({ message: 'invalid credentials' })
       }
     })
     .catch(err => {
-      res.json({ message: err.message })
+      res.json({ message: 'invalid credentials' })
     })
 })
 
