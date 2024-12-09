@@ -29,7 +29,7 @@ router.post('/login',checkValidNewUser,(req, res) => {
       }
     })
     .catch(err => {
-      res.json({ message: 'invalid credentials' })
+      res.status(404).json({ message: 'invalid credentials' })
     })
 })
 
