@@ -9,14 +9,15 @@ beforeAll(async () => {
 beforeEach(async () => {
   await db.seed.run()
 })
-test('sanity', () => {
-  expect(process.env.NODE_ENV).toBe('testing')
-})
+
 //Check End Points
-describe('Checking the End Points',()=>{
-  test('[GET] Jokes',async()=>{
-    const res = await request(server).get('/jokes')
-    console.log(res.body)
-    expect(res.body).toHaveLength(3)
+describe('', () => {
+  test('sanity', () => {
+    expect(process.env.NODE_ENV).toBe('testing')
+  })
+
+  test('[POST] Register', async () => {
+    await request(server).post('/register').send({ username: 'Areeba', password: '12345' })
+    expect(await db('users')).toHaveLength(1);
   })
 })

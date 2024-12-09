@@ -5,13 +5,14 @@ async function checkValidNewUser(req, res, next) {
         res.status(400).json({ message: 'username and password required' })
     }
     else {
+        req.user = username
         next()
     }
 }
 async function checkAvailable(req, res, next) {
     const user = await User.checkUserName({ username: req.body.username })
     if (user.length) {
-        res.send('username taken')
+        res.status(403).json({ message: 'username taken' })
     }
     else {
         next()
